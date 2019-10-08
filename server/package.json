@@ -1,0 +1,21 @@
+{
+  "name": "graphiql-books-server",
+  "version": "1.0.0",
+  "description": "NodeJS server for graphiql-books",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graphql",
+    "react",
+    "express",
+    "nodejs",
+    "books"
+  ],
+  "author": "Damhan Richardson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
