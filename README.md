@@ -5,7 +5,7 @@ GraphQL-books is an application that lets you track, view & manage the books tha
 
 # Tech Stack
 
-- **ReactJS** front-end with **HTML/CSS3**.
-- **NodeJS** server with **express**.
+- **ReactJS** front-end with **HTML/CSS3** and **styled-components** which uses **Apollo** GraphQL client.
+- **NodeJS** server with **express** that host's our **GraphQL** api.
 - **GraphQL** API to serve up information to front-end from backend.
 - MLab **mongodb** to store books and user information.
