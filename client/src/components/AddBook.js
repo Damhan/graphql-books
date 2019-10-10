@@ -1,9 +1,11 @@
 import React from 'react';
 import {useState} from 'react'; 
 import {graphql} from 'react-apollo'; 
-import {getAuthorsQuery} from './../queries/queries';
+import {getAuthorsQuery, addBookMutation, getBooksQuery} from './../queries/queries';
+import {flowRight as compose} from 'lodash';
 
 const AddBook = props => {
+
 
     const initialState = {
         name:"",
@@ -15,7 +17,15 @@ const AddBook = props => {
 
     const submitBookForm = event => {
         event.preventDefault()
-        console.log(book);
+        props.addBookMutation({
+            variables: {
+                name:book.name,
+                genre:book.genre,
+                authorId:book.authorId
+            },
+            //What queries need to be refetched with the additional book.
+            refetchQueries:[{query: getBooksQuery}]
+        });
         setBook(initialState);
     }
 
@@ -29,7 +39,7 @@ const AddBook = props => {
 
     //Populate the select dropdown with author names.
     const populateAuthors = (props) => {
-        var data = props.data;
+        var data = props.getAuthorsQuery;
         if(!data.loading) {
             return data.authors.map(author => {
                 return(<option key={author.id} value={author.id}>{author.name}</option>)
@@ -64,5 +74,8 @@ const AddBook = props => {
       </form>
     );
   }
-
-export default graphql(getAuthorsQuery)(AddBook);
+//Compose is used to bind multiple queries to one component.
+export default compose(
+    graphql(getAuthorsQuery, {name:"getAuthorsQuery"}),
+    graphql(addBookMutation, {name:"addBookMutation"})
+)(AddBook);
