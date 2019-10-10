@@ -1,0 +1,10 @@
+body {
+  background: #eee;
+  font-family: "Roboto", "Droid Sans", "sans-serif";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Roboto", "Droid Sans", "sans-serif";
+}
