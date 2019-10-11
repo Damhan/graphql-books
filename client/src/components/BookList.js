@@ -1,18 +1,50 @@
 import React from 'react';
+import styled from 'styled-components';
+import {useState} from 'react';
 import {graphql} from 'react-apollo'; 
 import {getBooksQuery} from "./../queries/queries";
+import BookDetails from './BookDetails';
 const BookList = props => {
 
-  //Rakes the data from props, maps through it & returns the names inside <li> elements.
+  const initialState = {
+    selected:null
+  }
+
+  const [state, setstate] = useState(initialState)
+
+  const BookLink = styled.li`
+    background:#5B3D5F;
+    color:white;
+    margin:0 auto;
+    margin-top:0.25em;
+    margin-bottom:0.25em;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    width:15em;
+    list-style-type:none;
+    text-align:center;
+    border-radius:4px;
+    cursor:default;
+
+    &:hover {
+    background: #AD386D;
+    color: white;
+  }
+  `
+
+  //Takes the data from props, maps through it & returns the names inside <li> elements.
   const displayBooks = (props) => {
       var data=props.data;
       //Return a "loading books" message as a placeholder while data is retrieved.
       if(data.loading) {
-          return (<div>Loading Books</div>);
+          return (<BookLink>Loading</BookLink>);
       }
       else {
           return data.books.map(book => {
-              return(<li key={book.id}>{book.name}</li>);
+              return(<BookLink key={book.id} onClick={e => {
+                setstate({...state, "selected":book.id});
+                console.log(state);
+              }}>{book.name}</BookLink>);
           })
       }
   }
@@ -20,9 +52,12 @@ const BookList = props => {
 
   return (
     <div>
-      <ul id="book-list">
-          {displayBooks(props)}
+      
+      <ul id="book-list" >
+            {displayBooks(props)}
+
       </ul>
+      <BookDetails bookId={state.selected}/>
     </div>
   );
 }
